@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/procedure_report_app.props" />
+</Project>
