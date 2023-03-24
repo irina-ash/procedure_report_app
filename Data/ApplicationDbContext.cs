@@ -13,5 +13,10 @@ namespace procedure_report_app.Data
         public DbSet<EXT_GeolObject_KategZalezh> GeolObjectKategZalezhSet { get; set; }
         public DbSet<EXT_License> LicenseSet { get; set; }
         public DbSet<EXT_sSub> SSubSet { get; set; }
+
+         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+        {
+        }
     }
 }

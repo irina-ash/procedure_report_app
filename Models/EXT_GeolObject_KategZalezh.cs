@@ -1,10 +1,12 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace procedure_report_app.Models
 {
      #nullable enable
      public class EXT_GeolObject_KategZalezh
      {
+        [Key]
         public required Guid GUID { get; set; }
         public required int typezalezh {get; set;}
         public required string category {get; set;}

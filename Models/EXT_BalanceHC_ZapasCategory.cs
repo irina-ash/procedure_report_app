@@ -1,10 +1,12 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace procedure_report_app.Models
 {
      #nullable enable
     public class EXT_BalanceHC_ZapasCategory
     {
+        [Key]
         public required Guid GUID { get; set; }
         public required float zapaspredyeargeo {get; set;}
         public required float zapaspredyearizvl {get; set;}

@@ -14,5 +14,6 @@ services:
     volumes:
       - database:/var/lib/mssql/data
     environment:
-      SA_PASSWORD: "admin"
+      MSSQL_SA_PASSWORD: "S3i4a7_kB"
+      MSSQL_PID: "Developer"
       ACCEPT_EULA: "Y"

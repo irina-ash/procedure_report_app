@@ -1,10 +1,12 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace procedure_report_app.Models
 {
      #nullable enable
      public class EXT_License
      {
+        [Key] 
         public required Guid GUID { get; set; }
         public Guid GUID_Companys {get; set;}
         public required Guid GUID_LicensePart {get; set;} 
