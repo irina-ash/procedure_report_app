@@ -10,7 +10,7 @@ namespace procedure_report_app.Models
         public Guid GUID_Sub {get; set;}
         public Guid GUID_Object {get; set;}
         public Guid GUID_ObjectForName {get; set;}
-        /*public float OilFirstYearGeoAB1C1 {get; set;}
+        public float OilFirstYearGeoAB1C1 {get; set;}
         public float OilFirstYearGeoB2C2 {get; set;}
         public float OilFirstYearExtAB1C1 {get; set;}
         public float OilFirstYearExtB2C2 {get; set;}
@@ -33,6 +33,6 @@ namespace procedure_report_app.Models
         public float DGEndYearExtC1 {get; set;}
         public float DGEndYearExtC2 {get; set;}
         public float DGProduction {get; set;}
-        public float DGEndYearCumulativeProduction {get; set;}*/
+        public float DGEndYearCumulativeProduction {get; set;}
      }
 }
