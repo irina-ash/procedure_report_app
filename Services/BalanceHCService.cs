@@ -12,8 +12,8 @@ namespace procedure_report_app.Services
         private static ApplicationDbContext _dbContext;
 
         /* захардкоженные параметры для процедуры отчёта */
-        private const string guidProductOil = "B3EFC82F-7AB7-4220-8212-9FB49583736A";
-        private const string guidProductDG = "4C16568A-7E38-478C-9AAD-41CDA710C598";
+        private const string guidProductOil = "B3EFC82F-7AB7-4220-8212-9FB49583736A"; /* Нефть */
+        private const string guidProductDG = "4C16568A-7E38-478C-9AAD-41CDA710C598"; /* Растворенный газ */
         private string[] sproductcomponentGuids = {guidProductOil, guidProductDG};
         private string[] categories = {"A","B1","B2","C1","C2"};
         private string[] catAB1C1 = {"A","B1","C1"};
@@ -23,6 +23,9 @@ namespace procedure_report_app.Services
         private string[] catC1 = {"C1"};
         private string[] catC2 = {"C2"};
         private int yearBalance = 2016;
+        
+        private const string defaultCompany = "Компания не определена";
+        private const string defaultCompanyGuid = "00000000-0000-0000-0000-000000000000";
 
         public BalanceHCService(ApplicationDbContext dbContext)
         {
@@ -165,10 +168,12 @@ namespace procedure_report_app.Services
                                     GUID_Sub = res.bdGUIDsSub,
                                     GUID_Object = res.bdGUIDObject,
                                     GUID_ObjectForName = res.gofnGUIDObjectForName,
+                                    /* начальные нефть */
                                     OilFirstYearGeoAB1C1 = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, catAB1C1, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearGeo, x.r7.r6.zcDobNacSNachEndYear})),
                                     OilFirstYearGeoB2C2 = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, catB2C2, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearGeo, x.r7.r6.zcDobNacSNachEndYear})),
                                     OilFirstYearExtAB1C1 = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, catAB1C1, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearIzvl, x.r7.r6.zcDobNacSNachEndYear})),
                                     OilFirstYearExtB2C2 = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, catB2C2, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearIzvl, x.r7.r6.zcDobNacSNachEndYear})),
+                                    /* годовые нефть */
                                     OilEndYearGeoAB1 = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, catAB1, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearGeo})),
                                     OilEndYearGeoB2 = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, catB2, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearGeo})),
                                     OilEndYearExtAB1 = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, catAB1, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearIzvl})),
@@ -179,14 +184,18 @@ namespace procedure_report_app.Services
                                     OilEndearGeoC2 = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, catC2, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearGeo})),
                                     OilEndYearExtC1 = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, catC1, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearIzvl})),
                                     OilEndYearExtC2 = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, catC2, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearIzvl})),
+                                    /* добыча + накопл. нефть */
                                     OilProduction = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, new string[]{}, null, new float[]{x.r7.r6.zcDobicha})),
                                     OilEndYearCumulativeProduction = res.Items.Sum(x => GetOilValue(x.r7.r6.zcGUIDsProductComponent, new string[]{}, null, new float[]{x.r7.r6.zcDobNacSNachEndYear})),
+                                    /* начальные р.г. */
                                     DGEndYearExtAB1C1 = res.Items.Sum(x => GetDGValue(x.r7.r6.zcGUIDsProductComponent, catAB1C1, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearIzvl, x.r7.r6.zcDobNacSNachEndYear, x.r7.r6.zcPotNacSNachEndYear, x.r7.r6.zcZakachSNachEndYear})),
                                     DGEndYearExtB2C2 = res.Items.Sum(x => GetDGValue(x.r7.r6.zcGUIDsProductComponent, catB2C2, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearIzvl, x.r7.r6.zcDobNacSNachEndYear, x.r7.r6.zcPotNacSNachEndYear, x.r7.r6.zcZakachSNachEndYear})),
+                                    /* годовые р.г. */
                                     DGEndYearExtAB1 = res.Items.Sum(x => GetDGValue(x.r7.r6.zcGUIDsProductComponent, catAB1, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearIzvl})),
                                     DGEndYearExtB2 = res.Items.Sum(x => GetDGValue(x.r7.r6.zcGUIDsProductComponent, catB2, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearIzvl})),
                                     DGEndYearExtC1 = res.Items.Sum(x => GetDGValue(x.r7.r6.zcGUIDsProductComponent, catC1, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearIzvl})),
                                     DGEndYearExtC2 = res.Items.Sum(x => GetDGValue(x.r7.r6.zcGUIDsProductComponent, catC2, x.r7.r6.r5.kzCategory, new float[]{x.r7.r6.zcZapasTekYearIzvl})),
+                                    /* добыча + накопл. р.г. */
                                     DGProduction = res.Items.Sum(x => GetDGValue(x.r7.r6.zcGUIDsProductComponent, new string[]{}, null, new float[]{x.r7.r6.zcDobicha, x.r7.r6.zcPoteri})),
                                     DGEndYearCumulativeProduction = res.Items.Sum(x => GetDGValue(x.r7.r6.zcGUIDsProductComponent, new string[]{}, null, new float[]{x.r7.r6.zcDobNacSNachEndYear, x.r7.r6.zcPotNacSNachEndYear})),
                                 });     
