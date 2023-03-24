@@ -1,0 +1,17 @@
+# User-specific files
+*.suo
+*.
+*.userosscache
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+[Bb]in/
+[Oo]bj/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Visual Studio Code
+.vscode
