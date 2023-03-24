@@ -2,6 +2,8 @@ using procedure_report_app.Data;
 using procedure_report_app.Models;
 using Microsoft.EntityFrameworkCore;
 using LinqToDB;
+using System.Linq;
+using System;
 
 namespace procedure_report_app.Services
 {

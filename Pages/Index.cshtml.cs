@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using procedure_report_app.Data;
 using procedure_report_app.Services;
 using procedure_report_app.Models;
+using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace procedure_report_app.Pages;
 
