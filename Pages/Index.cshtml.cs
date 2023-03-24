@@ -18,18 +18,16 @@ public class IndexModel : PageModel
     public IndexModel(ILogger<IndexModel> logger)
     {
          _logger = logger;
+        ApplicationDbContextFactory db_fac = new ApplicationDbContextFactory();
+
+        var args = new string[] {};
+        ApplicationDbContext db = db_fac.CreateDbContext(args);
+        _service = new BalanceHCService(db);
     }
 
     public void OnGet()
     {
-        ApplicationDbContextFactory db_fac = new ApplicationDbContextFactory();
-
-        var args = new string[] {};
-        using (ApplicationDbContext db = db_fac.CreateDbContext(args))
-        {
-            _service = new BalanceHCService(db);
-            IQueryable<ReserveReportItem> result = _service.GetTmpListByPlace(2000, "", "", "");
-            DisplayValue = result.Single().GUID_Object.ToString();
-        }
+        IQueryable<ReserveReportItem> result = _service.GetTmpListByPlace(2000, "", "", "");
+        DisplayValue = result.Single().GUID_Object.ToString();
     }
 }

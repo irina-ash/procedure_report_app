@@ -10,10 +10,12 @@ namespace procedure_report_app.Services
     public class BalanceHCService
     {
         private static ApplicationDbContext _dbContext;
+        /* параметры для процедуры отчёта */
 
-        /* захардкоженные параметры для процедуры отчёта */
-        private const string guidProductOil = "B3EFC82F-7AB7-4220-8212-9FB49583736A"; /* Нефть */
-        private const string guidProductDG = "4C16568A-7E38-478C-9AAD-41CDA710C598"; /* Растворенный газ */
+         /* Нефть */
+        const string guidProductOil = "B3EFC82F-7AB7-4220-8212-9FB49583736A";
+         /* Растворенный газ */
+        const string guidProductDG = "4C16568A-7E38-478C-9AAD-41CDA710C598";
         private string[] sproductcomponentGuids = {guidProductOil, guidProductDG};
         private string[] categories = {"A","B1","B2","C1","C2"};
         private string[] catAB1C1 = {"A","B1","C1"};
@@ -68,6 +70,7 @@ namespace procedure_report_app.Services
                                 bdGUIDObject = bd.GUID_Objects_Deposit == null ? bd.GUID : bd.GUID_Objects_Deposit,
                                 bdGUIDObjectsDeposit = bd.GUID_Objects_Deposit,
                             };
+            Console.WriteLine(reserves1.Count());                
 
             var reserves2 = from r1 in reserves1.DefaultIfEmpty()
                             join ss in _dbContext.SSubSet
