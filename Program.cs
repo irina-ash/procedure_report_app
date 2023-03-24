@@ -6,11 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder();
-string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
 
 var app = builder.Build();
 
