@@ -27,7 +27,7 @@ public class IndexModel : PageModel
         {
             _service = new BalanceHCService(db);
             IQueryable<ReserveReportItem> result = _service.GetTmpListByPlace(2000, "", "", "");
-            DisplayValue = result.ToQueryString();
+            DisplayValue = result.Single().GUID_Object.ToString();
         }
     }
 }
