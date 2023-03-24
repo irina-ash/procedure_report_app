@@ -1,9 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace procedure_report_app.Models
 {
      #nullable enable
+     [Table("EXT_sSub", Schema = "dbo")]
      public class EXT_sSub
      {
         [Key]       

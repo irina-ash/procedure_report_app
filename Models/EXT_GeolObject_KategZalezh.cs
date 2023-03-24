@@ -1,9 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace procedure_report_app.Models
 {
      #nullable enable
+     [Table("EXT_GeolObject_KategZalezh", Schema = "dbo")]
      public class EXT_GeolObject_KategZalezh
      {
         [Key]
